@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\Pacman.cs" />
     <Compile Include="Assets\Scripts\AnimatedSprite.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
+    <Compile Include="Assets\Scripts\Passage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
