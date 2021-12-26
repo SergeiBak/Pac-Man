@@ -112,8 +112,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PowerPelletEaten(PowerPellet pellet)
+    public void PowerPelletEaten(PowerPellet pellet) // set all ghosts to frightened state 
     {
+        for (int i = 0; i < ghosts.Length; i++) // loop through & set each ghost to be frightened
+        {
+            ghosts[i].frightened.Enable(pellet.duration);
+        }
+
         PelletEaten(pellet);
         CancelInvoke();
         Invoke(nameof(ResetGhostMultiplier), pellet.duration); // start power state countdown

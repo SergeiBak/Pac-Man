@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class GhostHome : GhostBehavior // handles ghost leaving home
 {
-    [SerializeField]
-    private Transform inside;
-    [SerializeField]
-    private Transform outside;
+    public Transform inside;
+    public Transform outside;
 
     private void OnEnable()
     {
