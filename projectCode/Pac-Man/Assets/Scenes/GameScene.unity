@@ -1045,6 +1045,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6131427148707423852, guid: f5b856b9d5ee5424f805f27031d97311, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2052862127}
+    - target: {fileID: 9117435082374028361, guid: f5b856b9d5ee5424f805f27031d97311, type: 3}
+      propertyPath: duration
+      value: 16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5b856b9d5ee5424f805f27031d97311, type: 3}
 --- !u!1001 &631907724
@@ -1098,9 +1106,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1420641456425456630, guid: 43a848a137c75d549ae7b178ca2b4043, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2052862127}
     - target: {fileID: 1420641456425456632, guid: 43a848a137c75d549ae7b178ca2b4043, type: 3}
       propertyPath: m_Name
       value: Ghost_Inky
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046404583014803923, guid: 43a848a137c75d549ae7b178ca2b4043, type: 3}
+      propertyPath: duration
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43a848a137c75d549ae7b178ca2b4043, type: 3}
@@ -1141,6 +1157,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8895207288086385730, guid: 2cf4820d89181f0419f37f3641d85484, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2052862127}
     - target: {fileID: 8895207288086385734, guid: 2cf4820d89181f0419f37f3641d85484, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1191,6 +1211,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cf4820d89181f0419f37f3641d85484, type: 3}
+--- !u!114 &1180412706 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8895207288086385730, guid: 2cf4820d89181f0419f37f3641d85484, type: 3}
+  m_PrefabInstance: {fileID: 987426556}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ee494bf0eee114c85f87f32a5f6074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1251778574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1221,6 +1252,17 @@ Transform:
   m_Father: {fileID: 1970327134}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1350254522 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6131427148707423852, guid: f5b856b9d5ee5424f805f27031d97311, type: 3}
+  m_PrefabInstance: {fileID: 610717843}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ee494bf0eee114c85f87f32a5f6074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1399664499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,6 +1341,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6684560482819886289, guid: f9e34ce23ae6d624faf3d7cde29301cc, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2052862127}
     - target: {fileID: 6684560482819886293, guid: f9e34ce23ae6d624faf3d7cde29301cc, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1346,6 +1392,10 @@ PrefabInstance:
     - target: {fileID: 6684560482819886303, guid: f9e34ce23ae6d624faf3d7cde29301cc, type: 3}
       propertyPath: m_Name
       value: Ghost_Pinky
+      objectReference: {fileID: 0}
+    - target: {fileID: 8598711104222607092, guid: f9e34ce23ae6d624faf3d7cde29301cc, type: 3}
+      propertyPath: duration
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9e34ce23ae6d624faf3d7cde29301cc, type: 3}
@@ -4095,9 +4145,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b09d0d18b1b784e8226c7f84b27b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghosts: []
+  ghosts:
+  - {fileID: 1180412706}
+  - {fileID: 1855470847}
+  - {fileID: 2122170807}
+  - {fileID: 1350254522}
   pacman: {fileID: 2052862128}
   pellets: {fileID: 1634094253}
+--- !u!114 &1855470847 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1420641456425456630, guid: 43a848a137c75d549ae7b178ca2b4043, type: 3}
+  m_PrefabInstance: {fileID: 631907724}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ee494bf0eee114c85f87f32a5f6074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1970327133
 GameObject:
   m_ObjectHideFlags: 0
@@ -10302,3 +10367,14 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &2122170807 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6684560482819886289, guid: f9e34ce23ae6d624faf3d7cde29301cc, type: 3}
+  m_PrefabInstance: {fileID: 1468778624}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ee494bf0eee114c85f87f32a5f6074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

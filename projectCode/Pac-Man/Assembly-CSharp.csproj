@@ -64,6 +64,11 @@
     <Compile Include="Assets\Scripts\Passage.cs" />
     <Compile Include="Assets\Scripts\Pellet.cs" />
     <Compile Include="Assets\Scripts\PowerPellet.cs" />
+    <Compile Include="Assets\Scripts\GhostBehavior.cs" />
+    <Compile Include="Assets\Scripts\GhostHome.cs" />
+    <Compile Include="Assets\Scripts\GhostScatter.cs" />
+    <Compile Include="Assets\Scripts\GhostChase.cs" />
+    <Compile Include="Assets\Scripts\GhostFrightened.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
