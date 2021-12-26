@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\GhostChase.cs" />
     <Compile Include="Assets\Scripts\GhostFrightened.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
+    <Compile Include="Assets\Scripts\GhostEyes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
