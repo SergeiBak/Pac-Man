@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\GhostScatter.cs" />
     <Compile Include="Assets\Scripts\GhostChase.cs" />
     <Compile Include="Assets\Scripts\GhostFrightened.cs" />
+    <Compile Include="Assets\Scripts\Node.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
