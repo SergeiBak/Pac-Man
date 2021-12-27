@@ -21,6 +21,27 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private Image[] lifeIcons;
+    [SerializeField]
+    private Image[] fruitIcons;
+
+    [SerializeField]
+    private Sprite empty;
+    [SerializeField]
+    private Sprite cherry;
+    [SerializeField]
+    private Sprite strawberry;
+    [SerializeField]
+    private Sprite orange;
+    [SerializeField]
+    private Sprite apple;
+    [SerializeField]
+    private Sprite melon;
+    [SerializeField]
+    private Sprite galaxianStarship;
+    [SerializeField]
+    private Sprite bell;
+    [SerializeField]
+    private Sprite key;
 
     public int ghostMultiplier { get; private set; } = 1;
     public int score { get; private set; }
@@ -108,6 +129,70 @@ public class GameManager : MonoBehaviour
         }
 
         levelText.text = level.ToString();
+
+        UpdateFruits();
+    }
+
+    private void UpdateFruits()
+    {
+        switch (level)
+        {
+            case 0:
+                EmptyFruits();
+                break;
+            case 1:
+                PushFruit(cherry);
+                break;
+            case 2:
+                PushFruit(strawberry);
+                break;
+            case 3:
+            case 4:
+                PushFruit(orange);
+                break;
+            case 5:
+            case 6:
+                PushFruit(apple);
+                break;
+            case 7:
+            case 8:
+                PushFruit(melon);
+                break;
+            case 9:
+            case 10:
+                PushFruit(galaxianStarship);
+                break;
+            case 11:
+            case 12:
+                PushFruit(bell);
+                break;
+            default:
+                PushFruit(key);
+                break;
+        }
+    }
+
+    private void PushFruit(Sprite fruit) // goes through and shifts all of the fruits by one, then pushes in the new fruit being added
+    {
+        for (int i = (fruitIcons.Length - 1); i >= 0; i--)
+        {
+            if (i == 0)
+            {
+                fruitIcons[i].sprite = fruit;
+            }
+            else
+            {
+                fruitIcons[i].sprite = fruitIcons[i-1].sprite;
+            }
+        }
+    }
+
+    private void EmptyFruits() // set all fruit icons to be empty
+    {
+        foreach (Image fruit in fruitIcons)
+        {
+            fruit.sprite = empty;
+        }
     }
 
     private void SetLives(int lives)
