@@ -61,6 +61,11 @@ public class GameManager : MonoBehaviour
         {
             NewGame();
         }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SetLevel(level + 1);
+        }
     }
 
     private void NewGame()
@@ -141,20 +146,26 @@ public class GameManager : MonoBehaviour
                 EmptyFruits();
                 break;
             case 1:
-                PushFruit(cherry);
+                PlaceFruit(0, cherry);
                 break;
             case 2:
-                PushFruit(strawberry);
+                PlaceFruit(1, strawberry);
                 break;
             case 3:
+                PlaceFruit(2, orange);
+                break;
             case 4:
-                PushFruit(orange);
+                PlaceFruit(3, orange);
                 break;
             case 5:
+                PlaceFruit(4, apple);
+                break;
             case 6:
-                PushFruit(apple);
+                PlaceFruit(5, apple);
                 break;
             case 7:
+                PlaceFruit(6, melon);
+                break;
             case 8:
                 PushFruit(melon);
                 break;
@@ -172,17 +183,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void PlaceFruit(int index, Sprite fruit) // if no overflow, simply place the fruit, otherwise PushFruit() method is used
+    {
+        fruitIcons[index].sprite = fruit;
+    }
+
     private void PushFruit(Sprite fruit) // goes through and shifts all of the fruits by one, then pushes in the new fruit being added
     {
-        for (int i = (fruitIcons.Length - 1); i >= 0; i--)
+        for (int i = 0; i < fruitIcons.Length; i++)
         {
-            if (i == 0)
+            if (i == (fruitIcons.Length - 1))
             {
                 fruitIcons[i].sprite = fruit;
             }
             else
             {
-                fruitIcons[i].sprite = fruitIcons[i-1].sprite;
+                fruitIcons[i].sprite = fruitIcons[i+1].sprite;
             }
         }
     }
