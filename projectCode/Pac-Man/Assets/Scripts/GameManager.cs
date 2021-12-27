@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,12 +12,25 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform pellets;
 
+    [SerializeField]
+    private Text scoreText;
+    [SerializeField]
+    private Text highScoreText;
+    [SerializeField]
+    private Text levelText;
+
+    [SerializeField]
+    private Image[] lifeIcons;
+
     public int ghostMultiplier { get; private set; } = 1;
     public int score { get; private set; }
     public int lives { get; private set; }
+    public int level { get; private set; }
 
     private void Start()
     {
+        SetupStats();
+
         NewGame();
     }
 
@@ -31,6 +45,7 @@ public class GameManager : MonoBehaviour
     private void NewGame()
     {
         SetScore(0);
+        SetLevel(0);
         SetLives(3);
         NewRound();
     }
@@ -41,6 +56,8 @@ public class GameManager : MonoBehaviour
         {
             pellet.gameObject.SetActive(true);
         }
+
+        SetLevel(level + 1);
 
         ResetState();
     }
@@ -70,11 +87,49 @@ public class GameManager : MonoBehaviour
     private void SetScore(int score)
     {
         this.score = score;
+
+        if (score > PlayerPrefs.GetInt("PacmanHighScore"))
+        {
+            PlayerPrefs.SetInt("PacmanHighScore", score);
+            SetHighScoreText();
+        }
+
+        scoreText.text = score.ToString();
+    }
+
+    private void SetLevel(int level)
+    {
+        this.level = level;
+
+        if (level > PlayerPrefs.GetInt("PacmanHighLevel"))
+        {
+            PlayerPrefs.SetInt("PacmanHighLevel", level);
+            SetHighScoreText();
+        }
+
+        levelText.text = level.ToString();
     }
 
     private void SetLives(int lives)
     {
         this.lives = lives;
+
+        DisableAllIcons();
+
+        int displayedLives = lives - 1;
+
+        for (int i = 0; i < displayedLives; i++)
+        {
+            lifeIcons[i].enabled = true;
+        }
+    }
+
+    private void DisableAllIcons()
+    {
+        foreach (Image lifeIcon in lifeIcons)
+        {
+            lifeIcon.enabled = false;
+        }
     }
 
     public void GhostEaten(Ghost ghost) // adds points for killing ghost
@@ -140,5 +195,24 @@ public class GameManager : MonoBehaviour
     private void ResetGhostMultiplier()
     {
         ghostMultiplier = 1;
+    }
+
+    private void SetupStats()
+    {
+        if (!PlayerPrefs.HasKey("PacmanHighScore"))
+        {
+            PlayerPrefs.SetInt("PacmanHighScore", 0);
+        }
+        if (!PlayerPrefs.HasKey("PacmanHighLevel"))
+        {
+            PlayerPrefs.SetInt("PacmanHighLevel", 0);
+        }
+
+        SetHighScoreText();
+    }
+
+    private void SetHighScoreText()
+    {
+        highScoreText.text = PlayerPrefs.GetInt("PacmanHighScore").ToString() + " L" + PlayerPrefs.GetInt("PacmanHighLevel").ToString();
     }
 }
