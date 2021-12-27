@@ -61,11 +61,6 @@ public class GameManager : MonoBehaviour
         {
             NewGame();
         }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            SetLevel(level + 1);
-        }
     }
 
     private void NewGame()
@@ -235,7 +230,7 @@ public class GameManager : MonoBehaviour
 
     public void GhostEaten(Ghost ghost) // adds points for killing ghost
     {
-        SetScore(score + (ghost.GetPoints() * ghostMultiplier));
+        SetScore(score + (ghost.GetPoints() * (int)(Mathf.Pow(2, (ghostMultiplier - 1)))));
         ghostMultiplier++;
     }
 
