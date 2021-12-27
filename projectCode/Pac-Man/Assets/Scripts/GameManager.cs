@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
     private bool bonusLifeAwarded = false;
 
     [SerializeField]
-    private int totalPellets = 240;
+    private int pelletsForFruit = 70;
     private bool fruitSpawned = false;
 
     private void Start()
@@ -394,7 +394,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        return (pelletsEaten >= (totalPellets / 2)); // check if at least half of pellets on map are eaten
+        return (pelletsEaten >= pelletsForFruit); // check if required pellets for fruit spawn are eaten
     }
 
     private void ResetGhostMultiplier()
