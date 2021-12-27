@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Image[] fruitIcons;
 
+    [Header("Fruit Icons")]
     [SerializeField]
     private Sprite empty;
     [SerializeField]
@@ -43,6 +44,28 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Sprite key;
 
+    [Header("Fruit Pickups")]
+    [SerializeField]
+    private GameObject cherryPickup;
+    [SerializeField]
+    private GameObject strawberryPickup;
+    [SerializeField]
+    private GameObject orangePickup;
+    [SerializeField]
+    private GameObject applePickup;
+    [SerializeField]
+    private GameObject melonPickup;
+    [SerializeField]
+    private GameObject galaxianStarshipPickup;
+    [SerializeField]
+    private GameObject bellPickup;
+    [SerializeField]
+    private GameObject keyPickup;
+
+    [Space(10)]
+    [SerializeField]
+    private Transform fruitSpawnLocation;
+
     public int ghostMultiplier { get; private set; } = 1;
     public int score { get; private set; }
     public int lives { get; private set; }
@@ -51,6 +74,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int bonusLifeScore = 10000;
     private bool bonusLifeAwarded = false;
+
+    [SerializeField]
+    private int totalPellets = 240;
+    private bool fruitSpawned = false;
 
     private void Start()
     {
@@ -81,8 +108,9 @@ public class GameManager : MonoBehaviour
         {
             pellet.gameObject.SetActive(true);
         }
-
+        
         SetLevel(level + 1);
+        fruitSpawned = false;
 
         ResetState();
     }
@@ -271,6 +299,55 @@ public class GameManager : MonoBehaviour
             pacman.gameObject.SetActive(false);
             Invoke(nameof(NewRound), 3.0f);
         }
+        else if (HalfPelletsEaten() && !fruitSpawned) // Checks to see if we need to spawn a fruit
+        {
+            fruitSpawned = true;
+            SpawnFruit();
+        }
+    }
+
+    private void SpawnFruit() // spawns a fruit based on the current level
+    {
+        switch (level)
+        {
+            case 0:
+                Debug.LogError("Error: GameManger-->SpawnFruit-->Case 0");
+                break;
+            case 1:
+                InstantiateFruit(cherryPickup);
+                break;
+            case 2:
+                InstantiateFruit(strawberryPickup);
+                break;
+            case 3:
+            case 4:
+                InstantiateFruit(orangePickup);
+                break;
+            case 5:
+            case 6:
+                InstantiateFruit(applePickup);
+                break;
+            case 7:
+            case 8:
+                InstantiateFruit(melonPickup);
+                break;
+            case 9:
+            case 10:
+                InstantiateFruit(galaxianStarshipPickup);
+                break;
+            case 11:
+            case 12:
+                InstantiateFruit(bellPickup);
+                break;
+            default:
+                InstantiateFruit(keyPickup);
+                break;
+        }
+    }
+
+    private void InstantiateFruit(GameObject fruit) // spawns fruit at fruitSpawnLocation
+    {
+        Instantiate(fruit, fruitSpawnLocation.position, Quaternion.identity);
     }
 
     public void PowerPelletEaten(PowerPellet pellet) // set all ghosts to frightened state 
@@ -285,6 +362,13 @@ public class GameManager : MonoBehaviour
         Invoke(nameof(ResetGhostMultiplier), pellet.duration); // start power state countdown
     }
 
+    public void FruitEaten(Fruit fruit)
+    {
+        fruit.gameObject.SetActive(false);
+
+        SetScore(score + fruit.points); // increment score
+    }
+
     private bool HasRemainingPellets()
     {
         foreach (Transform pellet in pellets)
@@ -296,6 +380,21 @@ public class GameManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    private bool HalfPelletsEaten()
+    {
+        int pelletsEaten = 0;
+
+        foreach (Transform pellet in pellets)
+        {
+            if (!pellet.gameObject.activeSelf)
+            {
+                pelletsEaten++;
+            }
+        }
+
+        return (pelletsEaten >= (totalPellets / 2)); // check if at least half of pellets on map are eaten
     }
 
     private void ResetGhostMultiplier()

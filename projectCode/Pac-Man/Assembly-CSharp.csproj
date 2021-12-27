@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\GhostFrightened.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
     <Compile Include="Assets\Scripts\GhostEyes.cs" />
+    <Compile Include="Assets\Scripts\Fruit.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

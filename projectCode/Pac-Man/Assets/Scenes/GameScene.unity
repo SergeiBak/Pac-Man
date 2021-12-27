@@ -420,6 +420,36 @@ Transform:
   m_Father: {fileID: 1514328253}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &433781269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 433781270}
+  m_Layer: 0
+  m_Name: FruitSpawnLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &433781270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433781269}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -3.5, z: -0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &481516029
 GameObject:
   m_ObjectHideFlags: 0
@@ -5277,6 +5307,17 @@ MonoBehaviour:
   galaxianStarship: {fileID: 21300000, guid: 43287113cc1900f44a90a7c880c6c0f6, type: 3}
   bell: {fileID: 21300000, guid: 9db59b1f7c3f18a488bb7006c8f7d63a, type: 3}
   key: {fileID: 21300000, guid: 77161e8e8bee8ad4280d90b263fece75, type: 3}
+  cherryPickup: {fileID: 7642559708910441165, guid: 4820a712acdd32446b3e88e19117e161, type: 3}
+  strawberryPickup: {fileID: 678571922356304853, guid: 1de94e11a5f068a49b32446543239c13, type: 3}
+  orangePickup: {fileID: 3666783603562882159, guid: 799d13633e1011b4e93214eb5aa81585, type: 3}
+  applePickup: {fileID: 1470960702685039735, guid: 2bae09762d8cbd54cac258417d3ac777, type: 3}
+  melonPickup: {fileID: 2991474756828844605, guid: 64946a9fcfd61664295aaeefffb55076, type: 3}
+  galaxianStarshipPickup: {fileID: 6673559215381922445, guid: 71e8deac4ffb93f4098169a4be63c7c2, type: 3}
+  bellPickup: {fileID: 4390442229062795761, guid: 5221a897b99162f4f93de49ea70dce56, type: 3}
+  keyPickup: {fileID: 8920351188708139596, guid: 63650d83bde275a4388ff619aed598d5, type: 3}
+  fruitSpawnLocation: {fileID: 433781270}
+  bonusLifeScore: 10000
+  totalPellets: 240
 --- !u!114 &1855470847 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1420641456425456630, guid: 43a848a137c75d549ae7b178ca2b4043, type: 3}
