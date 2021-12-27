@@ -48,6 +48,10 @@ public class GameManager : MonoBehaviour
     public int lives { get; private set; }
     public int level { get; private set; }
 
+    [SerializeField]
+    private int bonusLifeScore = 10000;
+    private bool bonusLifeAwarded = false;
+
     private void Start()
     {
         SetupStats();
@@ -108,6 +112,12 @@ public class GameManager : MonoBehaviour
     private void SetScore(int score)
     {
         this.score = score;
+
+        if (!bonusLifeAwarded && score >= bonusLifeScore) // If player reaches 10000, they get a bonus life
+        {
+            bonusLifeAwarded = true;
+            SetLives(lives + 1);
+        }
 
         if (score > PlayerPrefs.GetInt("PacmanHighScore"))
         {
