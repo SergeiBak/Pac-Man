@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GhostScatter : GhostBehavior // picks a random direction at each node (intersection), tries to avoid backtracking if possible
 {
+    [SerializeField]
+    private Transform targetCorner;
+
     private void OnDisable() // transistion to chase state
     {
         ghost.chase.Enable();
@@ -15,19 +18,51 @@ public class GhostScatter : GhostBehavior // picks a random direction at each no
 
         if (node != null && this.enabled && !ghost.frightened.enabled)
         {
-            int index = Random.Range(0, node.availableDirections.Count);
+            Vector2 direction = Vector2.zero;
+            float minDistance = float.MaxValue;
 
-            if (node.availableDirections[index] == -ghost.movement.direction && node.availableDirections.Count > 1) // making sure ghost doesn't backtrack and look stupid
+            foreach (Vector2 availableDirection in node.availableDirections)
             {
-                index++;
+                Vector3 newPosition = transform.position + new Vector3(availableDirection.x, availableDirection.y, 0.0f);
+                float distance = (targetCorner.position - newPosition).sqrMagnitude; // calculate distance from possible direction to target being chased. sqrMagnitude better for performance than magnitude
 
-                if (index >= node.availableDirections.Count) // if overflow, go to 0 index
+                if (availableDirection == -ghost.movement.direction && node.availableDirections.Count > 1) // prevents ghost from backtracking
                 {
-                    index = 0;
+
+                }
+                else
+                {
+                    if (distance < minDistance) // if this path is shorter, set direction to this direction
+                    {
+                        direction = availableDirection;
+                        minDistance = distance;
+                    }
                 }
             }
 
-            ghost.movement.SetDirection(node.availableDirections[index]);
+            ghost.movement.SetDirection(direction);
         }
     }
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    Node node = collision.GetComponent<Node>();
+
+    //    if (node != null && this.enabled && !ghost.frightened.enabled)
+    //    {
+    //        int index = Random.Range(0, node.availableDirections.Count);
+
+    //        if (node.availableDirections[index] == -ghost.movement.direction && node.availableDirections.Count > 1) // making sure ghost doesn't backtrack and look stupid
+    //        {
+    //            index++;
+
+    //            if (index >= node.availableDirections.Count) // if overflow, go to 0 index
+    //            {
+    //                index = 0;
+    //            }
+    //        }
+
+    //        ghost.movement.SetDirection(node.availableDirections[index]);
+    //    }
+    //}
 }
