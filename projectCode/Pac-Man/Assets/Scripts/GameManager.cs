@@ -372,6 +372,8 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < ghosts.Length; i++) // loop through & set each ghost to be frightened
         {
             ghosts[i].frightened.Enable(pellet.duration);
+            Vector2 priorDirection = ghosts[i].movement.direction;
+            ghosts[i].movement.SetDirection(-priorDirection); // make ghost turn around
         }
 
         PelletEaten(pellet);
