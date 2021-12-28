@@ -73,6 +73,10 @@
     <Compile Include="Assets\Scripts\GhostEyes.cs" />
     <Compile Include="Assets\Scripts\Fruit.cs" />
     <Compile Include="Assets\Scripts\PacmanDeath.cs" />
+    <Compile Include="Assets\Scripts\BlinkyTarget.cs" />
+    <Compile Include="Assets\Scripts\InkyTarget.cs" />
+    <Compile Include="Assets\Scripts\PinkyTarget.cs" />
+    <Compile Include="Assets\Scripts\ClydeTarget.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

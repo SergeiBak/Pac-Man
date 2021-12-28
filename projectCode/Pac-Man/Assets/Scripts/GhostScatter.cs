@@ -10,9 +10,11 @@ public class GhostScatter : GhostBehavior // picks a random direction at each no
     private void OnDisable() // transistion to chase state
     {
         ghost.chase.Enable();
+        Vector2 priorDirection = ghost.movement.direction;
+        ghost.movement.SetDirection(-priorDirection); // make ghost turn around
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) // Ghosts will head to their respective corners
     {
         Node node = collision.GetComponent<Node>();
 
