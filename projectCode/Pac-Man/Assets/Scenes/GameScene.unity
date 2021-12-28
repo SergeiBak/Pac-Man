@@ -1464,6 +1464,129 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541052783}
   m_CullTransparentMesh: 1
+--- !u!1 &587555136
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 587555140}
+  - component: {fileID: 587555139}
+  - component: {fileID: 587555138}
+  - component: {fileID: 587555137}
+  m_Layer: 0
+  m_Name: PacmanDeath
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &587555137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587555136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbc3f2e8676ef7b44b421dc68e12b9e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disappearTime: 1.15
+--- !u!114 &587555138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587555136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d270aad93739d947a373c4633fc488c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: 7c2a3428d5369f54e89eac69cd0ee74f, type: 3}
+  - {fileID: 21300000, guid: c2677ca0e0dc70f42a7f29031ae0a7d5, type: 3}
+  - {fileID: 21300000, guid: b595a8ceed8117d4cb85975acdec433e, type: 3}
+  - {fileID: 21300000, guid: 5831e314f767e4343be659f70d5311d8, type: 3}
+  - {fileID: 21300000, guid: 7ae4f038555669349b19305499ef3267, type: 3}
+  - {fileID: 21300000, guid: 2eb4a7f536f928148baff2eeba8af7a0, type: 3}
+  - {fileID: 21300000, guid: 2218b2226c23db74c8e39a743542e2e3, type: 3}
+  - {fileID: 21300000, guid: 6767e4473f995a2408eec5b583ded67a, type: 3}
+  - {fileID: 21300000, guid: d4f6bec92b04f35459999a9696d2a1da, type: 3}
+  - {fileID: 21300000, guid: 273b5a5d3e562d3419ecad3222b29217, type: 3}
+  - {fileID: 21300000, guid: c66651b84f0bd454e909b29b38595d84, type: 3}
+  animationTime: 0.1
+  loop: 0
+--- !u!212 &587555139
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587555136}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 7c2a3428d5369f54e89eac69cd0ee74f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1.875, y: 1.875}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &587555140
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587555136}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &610717843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5281,6 +5404,7 @@ MonoBehaviour:
   - {fileID: 1350254522}
   pacman: {fileID: 2052862128}
   pellets: {fileID: 1634094253}
+  pacmanDeath: {fileID: 587555136}
   scoreText: {fileID: 541052785}
   highScoreText: {fileID: 1374384462}
   levelText: {fileID: 2086237261}
@@ -5317,7 +5441,7 @@ MonoBehaviour:
   keyPickup: {fileID: 8920351188708139596, guid: 63650d83bde275a4388ff619aed598d5, type: 3}
   fruitSpawnLocation: {fileID: 433781270}
   bonusLifeScore: 10000
-  totalPellets: 240
+  pelletsForFruit: 70
 --- !u!114 &1855470847 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1420641456425456630, guid: 43a848a137c75d549ae7b178ca2b4043, type: 3}

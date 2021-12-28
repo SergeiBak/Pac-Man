@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     private Pacman pacman;
     [SerializeField]
     private Transform pellets;
+    [SerializeField]
+    private GameObject pacmanDeath;
 
     [SerializeField]
     private Text scoreText;
@@ -79,6 +81,8 @@ public class GameManager : MonoBehaviour
     private int pelletsForFruit = 70;
     private bool fruitSpawned = false;
 
+    private bool pacmanDead = false;
+
     private void Start()
     {
         SetupStats();
@@ -125,6 +129,7 @@ public class GameManager : MonoBehaviour
         }
 
         pacman.ResetState();
+        pacmanDead = false;
     }
 
     private void GameOver() // sets ghosts + pacman to false
@@ -275,6 +280,18 @@ public class GameManager : MonoBehaviour
     public void PacmanEaten()
     {
         pacman.gameObject.SetActive(false);
+
+        if (!pacmanDead)
+        {
+            pacmanDead = true;
+            pacmanDeath.transform.position = pacman.transform.position;
+            pacmanDeath.SetActive(true);
+
+            for (int i = 0; i < ghosts.Length; i++)
+            {
+                ghosts[i].gameObject.SetActive(false);
+            }
+        }
 
         SetLives(lives - 1); // decrement lives
 
