@@ -23,10 +23,17 @@ public class GhostChase : GhostBehavior // chase after player, when chase time i
                 Vector3 newPosition = transform.position + new Vector3(availableDirection.x, availableDirection.y, 0.0f);
                 float distance = (ghost.target.position - newPosition).sqrMagnitude; // calculate distance from possible direction to target being chased. sqrMagnitude better for performance than magnitude
 
-                if (distance < minDistance) // if this path is shorter, set direction to this direction
+                if (availableDirection == -ghost.movement.direction && node.availableDirections.Count > 1) // prevents ghost from backtracking
                 {
-                    direction = availableDirection;
-                    minDistance = distance;
+
+                }
+                else
+                {
+                    if (distance < minDistance) // if this path is shorter, set direction to this direction
+                    {
+                        direction = availableDirection;
+                        minDistance = distance;
+                    }
                 }
             }
 
