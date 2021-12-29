@@ -8,6 +8,7 @@ public class Pellet : MonoBehaviour
 
     protected virtual void Eat() // protected lets child class access, virtual allows for overriding
     {
+        FindObjectOfType<GameManager>().PlayChompSound();
         FindObjectOfType<GameManager>().PelletEaten(this);
     }
 

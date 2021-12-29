@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
     private Transform pellets;
     [SerializeField]
     private GameObject pacmanDeath;
+    [SerializeField]
+    private GameObject pacmanWin;
 
     [SerializeField]
     private Text scoreText;
@@ -20,6 +23,11 @@ public class GameManager : MonoBehaviour
     private Text highScoreText;
     [SerializeField]
     private Text levelText;
+
+    [SerializeField]
+    private GameObject ready;
+    [SerializeField]
+    private float startDelayTime;
 
     [SerializeField]
     private Image[] lifeIcons;
@@ -83,11 +91,46 @@ public class GameManager : MonoBehaviour
 
     private bool pacmanDead = false;
 
+    [SerializeField]
+    private Tilemap wallsTilemap;
+    [SerializeField]
+    private Color tilemapDim;
+    [SerializeField]
+    private Color tilemapBright;
+
+    [Header("Chomp SFX")]
+    [SerializeField]
+    private AudioSource chompSource;
+    [SerializeField]
+    private AudioClip[] chompClips;
+
+    [Header("Power Pellet SFX")]
+    [SerializeField]
+    private AudioSource powerSource;
+    [SerializeField]
+    private AudioClip powerPelletSound;
+
+    [Header("General SFX")]
+    [SerializeField]
+    private AudioSource generalSource;
+    [SerializeField]
+    private AudioClip fruitSound;
+    [SerializeField]
+    private AudioClip extraLifeSound;
+    [SerializeField]
+    private AudioClip startGameSound;
+    [SerializeField]
+    private AudioClip pacmanDeathSound;
+    [SerializeField]
+    private AudioClip ghostDeathSound;
+
     private void Start()
     {
         SetupStats();
 
-        NewGame();
+        DelayedStart();
+
+        // NewGame();
     }
 
     private void Update()
@@ -96,6 +139,33 @@ public class GameManager : MonoBehaviour
         {
             NewGame();
         }
+    }
+
+    private void DelayedStart()
+    {
+        NewGame();
+
+        Time.timeScale = 0;
+        ready.SetActive(true);
+
+        PlayStartGameSound();
+        StartCoroutine(WaitForRealTime(startDelayTime));
+    }
+
+    public IEnumerator WaitForRealTime(float delay) // Credit - https://answers.unity.com/questions/787180/make-a-coroutine-run-when-timetimescale-0.html
+    {
+        while (true)
+        {
+            float pauseEndTime = Time.realtimeSinceStartup + delay;
+            while (Time.realtimeSinceStartup < pauseEndTime)
+            {
+                yield return 0;
+            }
+            break;
+        }
+
+        Time.timeScale = 1;
+        ready.SetActive(false);
     }
 
     private void NewGame()
@@ -112,7 +182,7 @@ public class GameManager : MonoBehaviour
         {
             pellet.gameObject.SetActive(true);
         }
-        
+
         SetLevel(level + 1);
         fruitSpawned = false;
 
@@ -130,6 +200,7 @@ public class GameManager : MonoBehaviour
 
         pacman.ResetState();
         pacmanDead = false;
+        pacmanWin.SetActive(false);
     }
 
     private void GameOver() // sets ghosts + pacman to false
@@ -150,6 +221,8 @@ public class GameManager : MonoBehaviour
         {
             bonusLifeAwarded = true;
             SetLives(lives + 1);
+
+            PlayExtraLifeSound();
         }
 
         if (score > PlayerPrefs.GetInt("PacmanHighScore"))
@@ -275,6 +348,8 @@ public class GameManager : MonoBehaviour
     {
         SetScore(score + (ghost.GetPoints() * (int)(Mathf.Pow(2, (ghostMultiplier - 1)))));
         ghostMultiplier++;
+
+        PlayGhostDeathSound();
     }
 
     public void PacmanEaten()
@@ -291,6 +366,8 @@ public class GameManager : MonoBehaviour
             {
                 ghosts[i].gameObject.SetActive(false);
             }
+
+            PlayPacmanDeathSound();
         }
 
         SetLives(lives - 1); // decrement lives
@@ -313,7 +390,19 @@ public class GameManager : MonoBehaviour
 
         if (!HasRemainingPellets())
         {
+            for (int i = 0; i < ghosts.Length; i++)
+            {
+                ghosts[i].gameObject.SetActive(false);
+            }
+
+            pacmanWin.transform.position = pacman.gameObject.transform.position;
+            pacmanWin.SetActive(true);
             pacman.gameObject.SetActive(false);
+
+            CancelInvoke();
+            StopPowerPelletSound();
+
+            StartCoroutine(FlashMap());
             Invoke(nameof(NewRound), 3.0f);
         }
         else if (HalfPelletsEaten() && !fruitSpawned) // Checks to see if we need to spawn a fruit
@@ -376,9 +465,12 @@ public class GameManager : MonoBehaviour
             ghosts[i].movement.SetDirection(-priorDirection); // make ghost turn around
         }
 
+        PlayPowerPelletSound();
+
         PelletEaten(pellet);
         CancelInvoke();
         Invoke(nameof(ResetGhostMultiplier), pellet.duration); // start power state countdown
+        Invoke(nameof(StopPowerPelletSound), pellet.duration); // start power state countdown
     }
 
     public void FruitEaten(Fruit fruit)
@@ -438,5 +530,84 @@ public class GameManager : MonoBehaviour
     private void SetHighScoreText()
     {
         highScoreText.text = PlayerPrefs.GetInt("PacmanHighScore").ToString() + " L" + PlayerPrefs.GetInt("PacmanHighLevel").ToString();
+    }
+
+    private void PlayStartGameSound()
+    {
+        generalSource.PlayOneShot(startGameSound);
+    }
+
+    private void PlayPacmanDeathSound()
+    {
+        generalSource.PlayOneShot(pacmanDeathSound);
+    }
+
+    private void PlayGhostDeathSound()
+    {
+        generalSource.PlayOneShot(ghostDeathSound);
+    }
+
+    public void PlayFruitSound()
+    {
+        generalSource.PlayOneShot(fruitSound);
+    }
+
+    private void PlayExtraLifeSound()
+    {
+        generalSource.PlayOneShot(extraLifeSound);
+    }
+
+    private void PlayPowerPelletSound()
+    {
+        powerSource.Play();
+    }
+
+    private void StopPowerPelletSound()
+    {
+        powerSource.Pause();
+    }
+
+    public void PlayChompSound()
+    {
+        if (!chompSource.isPlaying)
+        {
+            StartCoroutine(PlayChompSequence());
+        }
+    }
+
+    IEnumerator PlayChompSequence()
+    {
+        //yield return null;
+
+        //1.Loop through each AudioClip
+        for (int i = 0; i < chompClips.Length; i++)
+        {
+            //2.Assign current AudioClip to audiosource
+            chompSource.clip = chompClips[i];
+
+            //3.Play Audio
+            chompSource.Play();
+
+            //4.Wait for it to finish playing
+            while (chompSource.isPlaying)
+            {
+                yield return null;
+            }
+
+            //5. Go back to #2 and play the next audio in the adClips array
+        }
+    }
+
+    IEnumerator FlashMap() // flashes map whenever round is complete
+    {
+        yield return new WaitForSeconds(1f);
+
+        for (int i = 0; i < 5; i++)
+        {
+            wallsTilemap.color = tilemapDim;
+            yield return new WaitForSeconds(.2f);
+            wallsTilemap.color = tilemapBright;
+            yield return new WaitForSeconds(.2f);
+        }
     }
 }

@@ -15,6 +15,7 @@ public class Fruit : MonoBehaviour
 
     protected virtual void Eat()
     {
+        FindObjectOfType<GameManager>().PlayFruitSound();
         FindObjectOfType<GameManager>().FruitEaten(this);
     }
 
