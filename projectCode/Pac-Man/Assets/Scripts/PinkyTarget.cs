@@ -6,11 +6,15 @@ public class PinkyTarget : MonoBehaviour
 {
     [SerializeField]
     private Pacman pacman;
+    [SerializeField]
+    private Ghost pinky;
 
     private bool visible = false;
-    private bool overflowBug = true;
+    public bool overflowBug = true;
 
     private SpriteRenderer sr;
+    [SerializeField]
+    private LineRenderer lr;
 
     private void Awake()
     {
@@ -54,10 +58,12 @@ public class PinkyTarget : MonoBehaviour
         if (visible)
         {
             sr.enabled = true;
+            lr.enabled = true;
         }
         else
         {
             sr.enabled = false;
+            lr.enabled = false;
         }
     }
 
@@ -92,5 +98,13 @@ public class PinkyTarget : MonoBehaviour
             newPostion.x += 4;
             transform.position = newPostion;
         }
+
+        UpdateLine(pinky.gameObject.transform.position, newPostion);
+    }
+
+    private void UpdateLine(Vector3 start, Vector3 end)
+    {
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
     }
 }

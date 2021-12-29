@@ -6,10 +6,15 @@ public class BlinkyTarget : MonoBehaviour
 {
     [SerializeField]
     private Transform pacman;
+    [SerializeField]
+    private Ghost blinky;
 
     private bool visible = false;
 
     private SpriteRenderer sr;
+
+    [SerializeField]
+    private LineRenderer lr;
 
     private void Awake()
     {
@@ -43,10 +48,12 @@ public class BlinkyTarget : MonoBehaviour
         if (visible)
         {
             sr.enabled = true;
+            lr.enabled = true;
         }
         else
         {
             sr.enabled = false;
+            lr.enabled = false;
         }
     }
 
@@ -55,5 +62,13 @@ public class BlinkyTarget : MonoBehaviour
         Vector3 newPostion = pacman.position; // get pacman's position
         newPostion.z = transform.position.z; // make sure z value of target not affected
         transform.position = newPostion;
+
+        UpdateLine(blinky.gameObject.transform.position, newPostion);
+    }
+
+    private void UpdateLine(Vector3 start, Vector3 end)
+    {
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
     }
 }
