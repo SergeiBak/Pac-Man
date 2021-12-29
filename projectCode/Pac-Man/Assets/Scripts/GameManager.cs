@@ -144,12 +144,14 @@ public class GameManager : MonoBehaviour
     private void DelayedStart()
     {
         NewGame();
+        HidePacmanAndGhosts();
+        SetLives(4);
 
         Time.timeScale = 0;
         ready.SetActive(true);
 
         PlayStartGameSound();
-        StartCoroutine(WaitForRealTime(startDelayTime));
+        StartCoroutine(WaitForRealTime(startDelayTime, 2f));
     }
 
     public IEnumerator WaitForRealTime(float delay) // Credit - https://answers.unity.com/questions/787180/make-a-coroutine-run-when-timetimescale-0.html
@@ -157,6 +159,34 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             float pauseEndTime = Time.realtimeSinceStartup + delay;
+            while (Time.realtimeSinceStartup < pauseEndTime)
+            {
+                yield return 0;
+            }
+            break;
+        }
+
+        Time.timeScale = 1;
+        ready.SetActive(false);
+    }
+
+    public IEnumerator WaitForRealTime(float delay, float secondDelay) // Credit - https://answers.unity.com/questions/787180/make-a-coroutine-run-when-timetimescale-0.html
+    {
+        while (true)
+        {
+            float pauseEndTime = Time.realtimeSinceStartup + delay - secondDelay;
+            while (Time.realtimeSinceStartup < pauseEndTime)
+            {
+                yield return 0;
+            }
+            break;
+        }
+
+        NewGame();
+
+        while (true)
+        {
+            float pauseEndTime = Time.realtimeSinceStartup + secondDelay;
             while (Time.realtimeSinceStartup < pauseEndTime)
             {
                 yield return 0;
@@ -342,6 +372,16 @@ public class GameManager : MonoBehaviour
         {
             lifeIcon.enabled = false;
         }
+    }
+
+    private void HidePacmanAndGhosts()
+    {
+        for (int i = 0; i < ghosts.Length; i++)
+        {
+            ghosts[i].gameObject.SetActive(false);
+        }
+
+        pacman.gameObject.SetActive(false);
     }
 
     public void GhostEaten(Ghost ghost) // adds points for killing ghost
