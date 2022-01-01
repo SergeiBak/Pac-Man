@@ -5,10 +5,14 @@ using UnityEngine;
 public class Pacman : MonoBehaviour
 {
     public Movement movement { get; private set; }
+    private SpriteRenderer sr;
+    [SerializeField]
+    private Sprite defaultSprite;
 
     private void Awake()
     {
         movement = GetComponent<Movement>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -36,6 +40,7 @@ public class Pacman : MonoBehaviour
 
     public void ResetState()
     {
+        sr.sprite = defaultSprite;
         gameObject.SetActive(true);
         movement.ResetState();
     }

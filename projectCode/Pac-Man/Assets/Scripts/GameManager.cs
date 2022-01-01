@@ -124,6 +124,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private AudioClip ghostDeathSound;
 
+    private bool skipRoundPause = true;
+
     private void Start()
     {
         SetupStats();
@@ -148,7 +150,6 @@ public class GameManager : MonoBehaviour
         SetLives(4);
 
         Time.timeScale = 0;
-        ready.SetActive(true);
 
         PlayStartGameSound();
         StartCoroutine(WaitForRealTime(startDelayTime, 2f));
@@ -156,6 +157,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator WaitForRealTime(float delay) // Credit - https://answers.unity.com/questions/787180/make-a-coroutine-run-when-timetimescale-0.html
     {
+        ready.SetActive(true);
+
         while (true)
         {
             float pauseEndTime = Time.realtimeSinceStartup + delay;
@@ -172,7 +175,9 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator WaitForRealTime(float delay, float secondDelay) // Credit - https://answers.unity.com/questions/787180/make-a-coroutine-run-when-timetimescale-0.html
     {
-        while (true)
+        ready.SetActive(true);
+
+        while (true) // At the end of this loop, pacman + ghosts placed on map
         {
             float pauseEndTime = Time.realtimeSinceStartup + delay - secondDelay;
             while (Time.realtimeSinceStartup < pauseEndTime)
@@ -183,8 +188,9 @@ public class GameManager : MonoBehaviour
         }
 
         NewGame();
+        skipRoundPause = false;
 
-        while (true)
+        while (true) // At end of this loop, the game timescale is set to normal and the game begins
         {
             float pauseEndTime = Time.realtimeSinceStartup + secondDelay;
             while (Time.realtimeSinceStartup < pauseEndTime)
@@ -231,6 +237,12 @@ public class GameManager : MonoBehaviour
         pacman.ResetState();
         pacmanDead = false;
         pacmanWin.SetActive(false);
+
+        if (!skipRoundPause) // unless its start of game, make sure to pause at the start of each round
+        {
+            Time.timeScale = 0;
+            StartCoroutine(WaitForRealTime(2f));
+        }
     }
 
     private void GameOver() // sets ghosts + pacman to false
