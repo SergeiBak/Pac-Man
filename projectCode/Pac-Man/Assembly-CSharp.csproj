@@ -77,6 +77,7 @@
     <Compile Include="Assets\Scripts\InkyTarget.cs" />
     <Compile Include="Assets\Scripts\PinkyTarget.cs" />
     <Compile Include="Assets\Scripts\ClydeTarget.cs" />
+    <Compile Include="Assets\Scripts\MenuController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
