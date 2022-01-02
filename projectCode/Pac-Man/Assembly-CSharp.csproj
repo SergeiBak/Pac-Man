@@ -56,28 +56,29 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\Ghost.cs" />
     <Compile Include="Assets\Scripts\Pacman.cs" />
+    <Compile Include="Assets\Scripts\GhostFrightened.cs" />
     <Compile Include="Assets\Scripts\AnimatedSprite.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
-    <Compile Include="Assets\Scripts\Passage.cs" />
-    <Compile Include="Assets\Scripts\Pellet.cs" />
-    <Compile Include="Assets\Scripts\PowerPellet.cs" />
-    <Compile Include="Assets\Scripts\GhostBehavior.cs" />
     <Compile Include="Assets\Scripts\GhostHome.cs" />
-    <Compile Include="Assets\Scripts\GhostScatter.cs" />
     <Compile Include="Assets\Scripts\GhostChase.cs" />
-    <Compile Include="Assets\Scripts\GhostFrightened.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
-    <Compile Include="Assets\Scripts\GhostEyes.cs" />
-    <Compile Include="Assets\Scripts\Fruit.cs" />
-    <Compile Include="Assets\Scripts\PacmanDeath.cs" />
-    <Compile Include="Assets\Scripts\BlinkyTarget.cs" />
-    <Compile Include="Assets\Scripts\InkyTarget.cs" />
     <Compile Include="Assets\Scripts\PinkyTarget.cs" />
+    <Compile Include="Assets\Scripts\Fruit.cs" />
+    <Compile Include="Assets\Scripts\BlinkyTarget.cs" />
+    <Compile Include="Assets\Scripts\GhostBehavior.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GhostEyes.cs" />
+    <Compile Include="Assets\Scripts\PowerPellet.cs" />
+    <Compile Include="Assets\Scripts\Passage.cs" />
     <Compile Include="Assets\Scripts\ClydeTarget.cs" />
+    <Compile Include="Assets\Scripts\GhostScatter.cs" />
+    <Compile Include="Assets\Scripts\Ghost.cs" />
+    <Compile Include="Assets\Scripts\Pellet.cs" />
+    <Compile Include="Assets\Scripts\InkyTarget.cs" />
     <Compile Include="Assets\Scripts\MenuController.cs" />
+    <Compile Include="Assets\Scripts\PacmanDeath.cs" />
+    <Compile Include="Assets\Scripts\AnimatedImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -647,6 +648,9 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.Tilemap.Extras">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Animation.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
     </Reference>
@@ -701,6 +705,9 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.Tilemap.Extras.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Mathematics">
       <HintPath>Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
     </Reference>
@@ -733,12 +740,6 @@
     </Reference>
     <Reference Include="Unity.2D.SpriteShape.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Tilemap.Extras">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Tilemap.Extras.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

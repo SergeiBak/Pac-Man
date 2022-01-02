@@ -61,6 +61,45 @@ public class MenuController : MonoBehaviour
     [SerializeField]
     private GameObject clyde;
 
+    [SerializeField]
+    private RectTransform startPos;
+    [SerializeField]
+    private RectTransform endPos;
+    [SerializeField]
+    private RectTransform blinkyStartPos;
+    [SerializeField]
+    private RectTransform blinkyEndPos;
+    [SerializeField]
+    private RectTransform pinkyStartPos;
+    [SerializeField]
+    private RectTransform pinkyEndPos;
+    [SerializeField]
+    private RectTransform inkyStartPos;
+    [SerializeField]
+    private RectTransform inkyEndPos;
+    [SerializeField]
+    private RectTransform clydeStartPos;
+    [SerializeField]
+    private RectTransform clydeEndPos;
+
+    [SerializeField]
+    private GameObject blinkyEyes;
+    [SerializeField]
+    private GameObject pinkyEyes;
+    [SerializeField]
+    private GameObject inkyEyes;
+    [SerializeField]
+    private GameObject clydeEyes;
+
+    [SerializeField]
+    private GameObject blinkyBlue;
+    [SerializeField]
+    private GameObject pinkyBlue;
+    [SerializeField]
+    private GameObject inkyBlue;
+    [SerializeField]
+    private GameObject clydeBlue;
+
     [Header("Timing Variables")]
     [SerializeField]
     private float ghostIconDelay;
@@ -150,6 +189,83 @@ public class MenuController : MonoBehaviour
 
         tenPts.SetActive(true);
         fiftyPts.SetActive(true);
+
+        StartCoroutine(PlayChaseSequence());
+    }
+
+    private IEnumerator PlayChaseSequence()
+    {
+        yield return new WaitForSeconds(ghostNameDelay); // initial delay
+
+        powerPellet.SetActive(true);
+
+        yield return new WaitForSeconds(ghostNameDelay);
+
+        StartCoroutine(LerpObject(4f, pacman, startPos.anchoredPosition, endPos.anchoredPosition));
+        pacman.SetActive(true);
+
+        StartCoroutine(LerpObject(4f, blinky, blinkyStartPos.anchoredPosition, blinkyEndPos.anchoredPosition));
+        blinky.SetActive(true);
+
+        StartCoroutine(LerpObject(4f, pinky, pinkyStartPos.anchoredPosition, pinkyEndPos.anchoredPosition));
+        pinky.SetActive(true);
+
+        StartCoroutine(LerpObject(4f, inky, inkyStartPos.anchoredPosition, inkyEndPos.anchoredPosition));
+        inky.SetActive(true);
+
+        StartCoroutine(LerpObject(4f, clyde, clydeStartPos.anchoredPosition, clydeEndPos.anchoredPosition));
+        clyde.SetActive(true);
+
+        yield return new WaitForSeconds(4f);
+
+        powerPellet.SetActive(false);
+
+        pacman.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward); // turn pacman back around
+        StartCoroutine(LerpObject(4f, pacman, endPos.anchoredPosition, startPos.anchoredPosition));
+
+        blinkyEyes.SetActive(false);
+        blinky.GetComponent<Image>().enabled = false;
+        blinkyBlue.SetActive(true);
+        StartCoroutine(LerpObject(4f, blinky, blinkyEndPos.anchoredPosition, blinkyStartPos.anchoredPosition));
+
+        pinkyEyes.SetActive(false);
+        pinky.GetComponent<Image>().enabled = false;
+        pinkyBlue.SetActive(true);
+        StartCoroutine(LerpObject(4f, pinky, pinkyEndPos.anchoredPosition, pinkyStartPos.anchoredPosition));
+
+        inkyEyes.SetActive(false);
+        inky.GetComponent<Image>().enabled = false;
+        inkyBlue.SetActive(true);
+        StartCoroutine(LerpObject(4f, inky, inkyEndPos.anchoredPosition, inkyStartPos.anchoredPosition));
+
+        clydeEyes.SetActive(false);
+        clyde.GetComponent<Image>().enabled = false;
+        clydeBlue.SetActive(true);
+        StartCoroutine(LerpObject(4f, clyde, clydeEndPos.anchoredPosition, clydeStartPos.anchoredPosition));
+
+        yield return new WaitForSeconds(4f);
+
+        pacman.SetActive(false);
+        blinky.SetActive(false);
+        pinky.SetActive(false);
+        inky.SetActive(false);
+        clyde.SetActive(false);
+    }
+
+    private IEnumerator LerpObject(float timeOfTravel, GameObject gameObject, Vector3 startPosition, Vector3 endPosition)
+    {
+        float currentTime = 0;
+        float normalizedValue;
+        RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+
+        while (currentTime <= timeOfTravel)
+        {
+            currentTime += Time.deltaTime;
+            normalizedValue = currentTime / timeOfTravel; // we normalize our time 
+
+            rectTransform.anchoredPosition = Vector3.Lerp(startPosition, endPosition, normalizedValue);
+            yield return null;
+        }
     }
 
     private void ClearUI() // hides all of the UI that is going to be revealed
@@ -172,6 +288,13 @@ public class MenuController : MonoBehaviour
 
         tenPts.SetActive(false);
         fiftyPts.SetActive(false);
+
+        powerPellet.SetActive(false);
+        pacman.SetActive(false);
+        blinky.SetActive(false);
+        pinky.SetActive(false);
+        inky.SetActive(false);
+        clyde.SetActive(false);
     }
 
     private void StartGame() // loads game scene
