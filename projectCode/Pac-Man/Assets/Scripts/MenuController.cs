@@ -250,9 +250,11 @@ public class MenuController : MonoBehaviour
         pinky.SetActive(false);
         inky.SetActive(false);
         clyde.SetActive(false);
+
+        StartCoroutine(FadeTextToPartialAlpha(1.5f, anyKeyText));
     }
 
-    private IEnumerator LerpObject(float timeOfTravel, GameObject gameObject, Vector3 startPosition, Vector3 endPosition)
+    private IEnumerator LerpObject(float timeOfTravel, GameObject gameObject, Vector3 startPosition, Vector3 endPosition) // https://answers.unity.com/questions/1240045/how-to-smoothly-move-object-with-recttransform.html
     {
         float currentTime = 0;
         float normalizedValue;
@@ -266,6 +268,28 @@ public class MenuController : MonoBehaviour
             rectTransform.anchoredPosition = Vector3.Lerp(startPosition, endPosition, normalizedValue);
             yield return null;
         }
+    }
+
+    public IEnumerator FadeTextToFullAlpha(float t, Text i) // https://forum.unity.com/threads/fading-in-out-gui-text-with-c-solved.380822/
+    {
+        i.color = new Color(i.color.r, i.color.g, i.color.b, 0.1f);
+        while (i.color.a < 1.0f)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a + (Time.deltaTime / t));
+            yield return null;
+        }
+        StartCoroutine(FadeTextToPartialAlpha(1.5f, anyKeyText));
+    }
+
+    public IEnumerator FadeTextToPartialAlpha(float t, Text i) // https://forum.unity.com/threads/fading-in-out-gui-text-with-c-solved.380822/
+    {
+        i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
+        while (i.color.a > 0.1f)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
+            yield return null;
+        }
+        StartCoroutine(FadeTextToFullAlpha(1.5f, anyKeyText));
     }
 
     private void ClearUI() // hides all of the UI that is going to be revealed
