@@ -308,6 +308,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40397c221bb5f6a4f9054b399dc50dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highScoreText: {fileID: 1824018556}
+  blinkyIcon: {fileID: 831130996}
+  blinkyName: {fileID: 1818299089}
+  blinkyNickname: {fileID: 1831680483}
+  pinkyIcon: {fileID: 33025399}
+  pinkyName: {fileID: 969210219}
+  pinkyNickname: {fileID: 1606280228}
+  inkyIcon: {fileID: 2008051832}
+  inkyName: {fileID: 2041011446}
+  inkyNickname: {fileID: 529018745}
+  clydeIcon: {fileID: 1229372749}
+  clydeName: {fileID: 1249161230}
+  clydeNickname: {fileID: 848834019}
+  tenPts: {fileID: 1430717788}
+  fiftyPts: {fileID: 1252253778}
+  powerPellet: {fileID: 1700340917}
+  pacman: {fileID: 1888809333}
+  blinky: {fileID: 1224717099}
+  pinky: {fileID: 1619674988}
+  inky: {fileID: 758473528}
+  clyde: {fileID: 515096166}
+  ghostIconDelay: 1
+  ghostNameDelay: 0.5
+  anyKeyText: {fileID: 1801375740}
 --- !u!4 &239827922
 Transform:
   m_ObjectHideFlags: 0
