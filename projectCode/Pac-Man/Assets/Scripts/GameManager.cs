@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private GameObject ready;
+    [SerializeField]
+    private Text gameOver;
     [SerializeField]
     private float startDelayTime;
 
@@ -126,8 +129,13 @@ public class GameManager : MonoBehaviour
 
     private bool skipRoundPause = true;
 
+    [SerializeField]
+    private float returnToMenuTime = 2f;
+
     private void Start()
     {
+        gameOver.enabled = false;
+
         SetupStats();
 
         DelayedStart();
@@ -135,13 +143,13 @@ public class GameManager : MonoBehaviour
         // NewGame();
     }
 
-    private void Update()
-    {
-        if (lives <= 0 && Input.anyKeyDown)
-        {
-            NewGame();
-        }
-    }
+    //private void Update()
+    //{
+    //    if (lives <= 0 && Input.anyKeyDown)
+    //    {
+    //        NewGame();
+    //    }
+    //}
 
     private void DelayedStart()
     {
@@ -253,6 +261,17 @@ public class GameManager : MonoBehaviour
         }
 
         pacman.gameObject.SetActive(false);
+
+        gameOver.enabled = true;
+
+        StartCoroutine(ReturnToMenu());
+    }
+
+    private IEnumerator ReturnToMenu() // returns player to menu after a delay
+    {
+        yield return new WaitForSeconds(returnToMenuTime);
+
+        SceneManager.LoadScene("MenuScene");
     }
 
     private void SetScore(int score)
