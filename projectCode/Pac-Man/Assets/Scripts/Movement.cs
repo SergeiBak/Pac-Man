@@ -20,6 +20,9 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private LayerMask obstacleLayer;
 
+    [SerializeField]
+    private bool resetMultiplierAtStart = true;
+
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
@@ -33,10 +36,17 @@ public class Movement : MonoBehaviour
 
     public void ResetState() // reset variables to default values
     {
-        speedMultiplier = 1.0f;
-        direction = intialDirection;
-        nextDirection = Vector2.zero;
-        transform.position = startingPostion;
+        if (resetMultiplierAtStart)
+        {
+            speedMultiplier = 1.0f;
+            direction = intialDirection;
+            nextDirection = Vector2.zero;
+            transform.position = startingPostion;
+        }
+        
+        //direction = intialDirection;
+        //nextDirection = Vector2.zero;
+        //transform.position = startingPostion;
         rigidBody.isKinematic = false;
         this.enabled = true;
     }

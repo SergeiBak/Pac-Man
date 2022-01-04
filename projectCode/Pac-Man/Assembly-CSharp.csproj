@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scripts\PacmanDeath.cs" />
     <Compile Include="Assets\Scripts\AnimatedImage.cs" />
+    <Compile Include="Assets\Scripts\GhostRetreat.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

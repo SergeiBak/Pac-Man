@@ -19,6 +19,15 @@ public class GameManager : MonoBehaviour
     private GameObject pacmanWin;
 
     [SerializeField]
+    private GameObject ghostRetreatBlinky;
+    [SerializeField]
+    private GameObject ghostRetreatInky;
+    [SerializeField]
+    private GameObject ghostRetreatPinky;
+    [SerializeField]
+    private GameObject ghostRetreatClyde;
+
+    [SerializeField]
     private Text scoreText;
     [SerializeField]
     private Text highScoreText;
@@ -241,6 +250,15 @@ public class GameManager : MonoBehaviour
         {
             ghosts[i].ResetState();
         }
+
+        ghostRetreatBlinky.SetActive(false);
+        ghostRetreatBlinky.GetComponent<GhostRetreat>().enabled = false;
+        ghostRetreatInky.SetActive(false);
+        ghostRetreatInky.GetComponent<GhostRetreat>().enabled = false;
+        ghostRetreatPinky.SetActive(false);
+        ghostRetreatPinky.GetComponent<GhostRetreat>().enabled = false;
+        ghostRetreatClyde.SetActive(false);
+        ghostRetreatClyde.GetComponent<GhostRetreat>().enabled = false;
 
         pacman.ResetState();
         pacmanDead = false;

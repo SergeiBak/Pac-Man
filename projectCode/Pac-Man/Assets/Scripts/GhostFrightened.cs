@@ -13,6 +13,9 @@ public class GhostFrightened : GhostBehavior
     [SerializeField]
     private SpriteRenderer white;
 
+    [SerializeField]
+    private GameObject ghostRetreat;
+
     public bool eaten { get; private set; }
 
     public override void Enable(float duration)
@@ -51,16 +54,22 @@ public class GhostFrightened : GhostBehavior
     {
         eaten = true;
 
-        Vector3 position = ghost.home.inside.position;
-        position.z = ghost.transform.position.z;
-        ghost.transform.position = position;
+        //Vector3 position = ghost.home.inside.position;
+        //position.z = ghost.transform.position.z;
+        //ghost.transform.position = position;
 
-        ghost.home.Enable(duration);
+        // ghost.home.Enable(duration);
 
-        body.enabled = true;
-        eyes.enabled = true;
-        blue.enabled = false;
-        white.enabled = false;
+        //body.enabled = true;
+        //eyes.enabled = true;
+        //blue.enabled = false;
+        //white.enabled = false;
+
+        ghostRetreat.transform.position = transform.position;
+        // ghostRetreat.GetComponent<Movement>().SetDirection(ghost.movement.direction);
+        ghostRetreat.SetActive(true);
+        ghostRetreat.GetComponent<GhostRetreat>().enabled = true;
+        this.gameObject.SetActive(false);
     }
 
     private void OnEnable()
