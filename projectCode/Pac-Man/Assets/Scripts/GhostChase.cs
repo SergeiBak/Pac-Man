@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class GhostChase : GhostBehavior // chase after player, when chase time is up transition to scatter state
 {
+    [SerializeField]
+    private GameManager gm;
+
+    //private void Awake()
+    //{
+    //    gm = FindObjectOfType<GameManager>();
+    //}
+
     private void OnDisable() // transistion to scatter state
     {
-        ghost.scatter.Enable();
+        //Debug.Log("Scatter: " + gm.CalculateScatterTime());
+        ghost.scatter.Enable(gm.CalculateScatterTime());
+        //ghost.scatter.Enable();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

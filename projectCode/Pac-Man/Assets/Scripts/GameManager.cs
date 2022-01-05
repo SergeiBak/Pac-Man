@@ -160,6 +160,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float returnToMenuTime = 2f;
 
+    private float timer = 0;
+
     private void Start()
     {
         gameOver.enabled = false;
@@ -183,13 +185,10 @@ public class GameManager : MonoBehaviour
         // NewGame();
     }
 
-    //private void Update()
-    //{
-    //    if (lives <= 0 && Input.anyKeyDown)
-    //    {
-    //        NewGame();
-    //    }
-    //}
+    private void Update()
+    {
+        timer += Time.deltaTime;
+    }
 
     private void DelayedStart()
     {
@@ -360,6 +359,8 @@ public class GameManager : MonoBehaviour
         levelText.text = level.ToString();
 
         UpdateFruits();
+
+        timer = 0;
     }
 
     private void UpdateFruits()
@@ -789,5 +790,99 @@ public class GameManager : MonoBehaviour
             wallsTilemap.color = tilemapBright;
             yield return new WaitForSeconds(.2f);
         }
+    }
+
+    public float CalculateScatterTime() // returns scatter time based on level and phase
+    {
+        switch (level)
+        {
+            case 0:
+                //Debug.LogError("Invalid Case: GameManager-->CalculateScatterTime");
+                break;
+            case 1:
+                if (timer <= 40) // Phase 1 + 2
+                {
+                    return 7;
+                }
+                else if (timer <= 90)// Phase 3 + 4
+                {
+                    return 5;
+                }
+                else // Phase 5+
+                {
+                    return float.MinValue;
+                }
+
+            case 2:
+            case 3:
+            case 4:
+                if (timer <= 40) // Phase 1 + 2
+                {
+                    return 7;
+                }
+                else if (timer <= 60)// Phase 3
+                {
+                    return 5;
+                }
+                else // Phase 4+
+                {
+                    return float.MinValue;
+                }
+
+            default:
+                if (timer <= 60) // Phase 1 to 3
+                {
+                    return 5;
+                }
+                else // Phase 4+
+                {
+                    return float.MinValue;
+                }
+        }
+
+        return 0.0f;
+    }
+
+    public float CalculateChaseTime() // returns chase time based on level and phase
+    {
+        switch (level)
+        {
+            case 0:
+                //Debug.LogError("Invalid Case: GameManager-->CalculateChaseTime");
+                break;
+            case 1:
+                if (timer <= 82) // Phase 1 to 3
+                {
+                    return 20;
+                }
+                else // Phase 4+
+                {
+                    return float.MaxValue;
+                }
+
+            case 2:
+            case 3:
+            case 4:
+                if (timer <= 55) // Phase 1 to 2
+                {
+                    return 20;
+                }
+                else // Phase 3+
+                {
+                    return float.MaxValue;
+                }
+
+            default:
+                if (timer <= 52) // Phase 1 to 2
+                {
+                    return 20;
+                }
+                else // Phase 3+
+                {
+                    return float.MaxValue;
+                }
+        }
+
+        return 0.0f;
     }
 }

@@ -6,10 +6,18 @@ public class GhostScatter : GhostBehavior // picks a random direction at each no
 {
     [SerializeField]
     private Transform targetCorner;
+    [SerializeField]
+    private GameManager gm;
+
+    //private void Awake()
+    //{
+    //    gm = FindObjectOfType<GameManager>();
+    //}
 
     private void OnDisable() // transistion to chase state
     {
-        ghost.chase.Enable();
+        //Debug.Log("Chase: " + gm.CalculateChaseTime());
+        ghost.chase.Enable(gm.CalculateChaseTime());
         Vector2 priorDirection = ghost.movement.direction;
         ghost.movement.SetDirection(-priorDirection); // make ghost turn around
     }
