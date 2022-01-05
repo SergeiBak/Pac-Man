@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
     {
         NewGame();
         HidePacmanAndGhosts();
-        SetLives(4);
+        SetLives(3);
 
         Time.timeScale = 0;
 
@@ -206,6 +206,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator WaitForRealTime(float delay) // Credit - https://answers.unity.com/questions/787180/make-a-coroutine-run-when-timetimescale-0.html
     {
         ready.SetActive(true);
+        SubtractLivesIcon();
 
         while (true)
         {
@@ -236,6 +237,7 @@ public class GameManager : MonoBehaviour
         }
 
         NewGame();
+        SubtractLivesIcon();
         skipRoundPause = false;
 
         while (true) // At end of this loop, the game timescale is set to normal and the game begins
@@ -331,6 +333,7 @@ public class GameManager : MonoBehaviour
         {
             bonusLifeAwarded = true;
             SetLives(lives + 1);
+            SubtractLivesIcon();
 
             PlayExtraLifeSound();
         }
@@ -436,6 +439,18 @@ public class GameManager : MonoBehaviour
     {
         this.lives = lives;
 
+        DisableAllIcons();
+
+        int displayedLives = lives;
+
+        for (int i = 0; i < displayedLives; i++)
+        {
+            lifeIcons[i].enabled = true;
+        }
+    }
+
+    private void SubtractLivesIcon()
+    {
         DisableAllIcons();
 
         int displayedLives = lives - 1;
