@@ -45,6 +45,22 @@ public class GameManager : MonoBehaviour
     private Text fruitText;
 
     [SerializeField]
+    private Text ghostText1;
+    [SerializeField]
+    private Text ghostText2;
+    [SerializeField]
+    private Text ghostText3;
+    [SerializeField]
+    private Text ghostText4;
+
+    private RectTransform ghost1TextTransform;
+    private RectTransform ghost2TextTransform;
+    private RectTransform ghost3TextTransform;
+    private RectTransform ghost4TextTransform;
+
+    private RectTransform canvasRectT;
+
+    [SerializeField]
     private Image[] lifeIcons;
     [SerializeField]
     private Image[] fruitIcons;
@@ -148,6 +164,17 @@ public class GameManager : MonoBehaviour
     {
         gameOver.enabled = false;
         fruitText.enabled = false;
+        ghostText1.enabled = false;
+        ghostText2.enabled = false;
+        ghostText3.enabled = false;
+        ghostText4.enabled = false;
+
+        ghost1TextTransform = ghostText1.rectTransform;
+        ghost2TextTransform = ghostText2.rectTransform;
+        ghost3TextTransform = ghostText3.rectTransform;
+        ghost4TextTransform = ghostText4.rectTransform;
+
+        canvasRectT = FindObjectOfType<Canvas>().GetComponent<RectTransform>();
 
         SetupStats();
 
@@ -439,10 +466,43 @@ public class GameManager : MonoBehaviour
 
     public void GhostEaten(Ghost ghost) // adds points for killing ghost
     {
-        SetScore(score + (ghost.GetPoints() * (int)(Mathf.Pow(2, (ghostMultiplier - 1)))));
+        int ghostScore = ghost.GetPoints() * (int)(Mathf.Pow(2, (ghostMultiplier - 1)));
+        SetScore(score + ghostScore);
         ghostMultiplier++;
 
         PlayGhostDeathSound();
+
+        if (!ghostText1.isActiveAndEnabled)
+        {
+            StartCoroutine(TempGhostText(ghostScore, ghost, ghostText1, ghost1TextTransform));
+        }
+        else if (!ghostText2.isActiveAndEnabled)
+        {
+            StartCoroutine(TempGhostText(ghostScore, ghost, ghostText2, ghost2TextTransform));
+        }
+        else if (!ghostText3.isActiveAndEnabled)
+        {
+            StartCoroutine(TempGhostText(ghostScore, ghost, ghostText3, ghost3TextTransform));
+        }
+        else
+        {
+            StartCoroutine(TempGhostText(ghostScore, ghost, ghostText4, ghost4TextTransform));
+        }
+    }
+
+    private IEnumerator TempGhostText(int ghostPoints, Ghost ghost, Text ghostText, RectTransform ghostTextRectTransform)
+    {
+        ghostText.text = ghostPoints.ToString();
+
+        Vector2 ghostPos = ghost.gameObject.transform.position;
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, ghostPos);
+        ghostTextRectTransform.anchoredPosition = screenPoint - canvasRectT.sizeDelta / 2f;
+
+        ghostText.enabled = true;
+
+        yield return new WaitForSeconds(1f);
+
+        ghostText.enabled = false;
     }
 
     public void PacmanEaten()
