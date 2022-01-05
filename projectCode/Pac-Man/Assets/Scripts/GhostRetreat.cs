@@ -149,7 +149,7 @@ public class GhostRetreat : MonoBehaviour
         movement.enabled = true;
 
         ghost.ResetState();
-        ghost.home.Enable(5);
+        ghost.home.Enable(0.5f);
         ghost.gameObject.transform.position = transform.position;
         ghost.gameObject.SetActive(true);
 

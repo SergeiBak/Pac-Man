@@ -66,7 +66,6 @@ public class GhostFrightened : GhostBehavior
         //white.enabled = false;
 
         ghostRetreat.transform.position = transform.position;
-        // ghostRetreat.GetComponent<Movement>().SetDirection(ghost.movement.direction);
         ghostRetreat.SetActive(true);
         ghostRetreat.GetComponent<GhostRetreat>().enabled = true;
         this.gameObject.SetActive(false);

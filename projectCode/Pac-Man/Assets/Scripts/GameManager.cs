@@ -42,6 +42,9 @@ public class GameManager : MonoBehaviour
     private float startDelayTime;
 
     [SerializeField]
+    private Text fruitText;
+
+    [SerializeField]
     private Image[] lifeIcons;
     [SerializeField]
     private Image[] fruitIcons;
@@ -144,6 +147,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         gameOver.enabled = false;
+        fruitText.enabled = false;
 
         SetupStats();
 
@@ -567,6 +571,18 @@ public class GameManager : MonoBehaviour
         fruit.gameObject.SetActive(false);
 
         SetScore(score + fruit.points); // increment score
+
+        fruitText.text = fruit.points.ToString();
+        StartCoroutine(TempFruitText());
+    }
+
+    private IEnumerator TempFruitText() // fruit points text appears on screen for a period of time then disappears
+    {
+        fruitText.enabled = true;
+
+        yield return new WaitForSeconds(2f);
+
+        fruitText.enabled = false;
     }
 
     private bool HasRemainingPellets()
