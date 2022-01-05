@@ -155,8 +155,23 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private AudioClip ghostDeathSound;
 
+    [Header("Siren SFX")]
+    [SerializeField]
+    private AudioSource sirenSource;
+    [SerializeField]
+    private AudioClip siren1Sound;
+    [SerializeField]
+    private AudioClip siren2Sound;
+    [SerializeField]
+    private AudioClip siren3Sound;
+    [SerializeField]
+    private AudioClip siren4Sound;
+    [SerializeField]
+    private AudioClip siren5Sound;
+
     private bool skipRoundPause = true;
 
+    [Space(10)]
     [SerializeField]
     private float returnToMenuTime = 2f;
 
@@ -219,6 +234,7 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 1;
         ready.SetActive(false);
+        sirenSource.Play();
     }
 
     public IEnumerator WaitForRealTime(float delay, float secondDelay) // Credit - https://answers.unity.com/questions/787180/make-a-coroutine-run-when-timetimescale-0.html
@@ -251,6 +267,7 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 1;
         ready.SetActive(false);
+        sirenSource.Play();
     }
 
     private void NewGame()
@@ -523,6 +540,8 @@ public class GameManager : MonoBehaviour
 
     public void PacmanEaten()
     {
+        sirenSource.Stop();
+
         pacman.gameObject.SetActive(false);
 
         if (!pacmanDead)
@@ -559,6 +578,9 @@ public class GameManager : MonoBehaviour
 
         if (!HasRemainingPellets())
         {
+            sirenSource.Stop();
+            sirenSource.pitch = 1f;
+
             for (int i = 0; i < ghosts.Length; i++)
             {
                 ghosts[i].gameObject.SetActive(false);
@@ -627,16 +649,25 @@ public class GameManager : MonoBehaviour
 
     public void PowerPelletEaten(PowerPellet pellet) // set all ghosts to frightened state 
     {
-        for (int i = 0; i < ghosts.Length; i++) // loop through & set each ghost to be frightened
+        if (level < 21)
         {
-            ghosts[i].frightened.Enable(pellet.duration);
-            Vector2 priorDirection = ghosts[i].movement.direction;
-            ghosts[i].movement.SetDirection(-priorDirection); // make ghost turn around
+            for (int i = 0; i < ghosts.Length; i++) // loop through & set each ghost to be frightened
+            {
+                ghosts[i].frightened.Enable(pellet.duration);
+                Vector2 priorDirection = ghosts[i].movement.direction;
+                ghosts[i].movement.SetDirection(-priorDirection); // make ghost turn around
+            }
         }
 
+        PelletEaten(pellet);
+
+        if (level >= 21)
+        {
+            return;
+        }
+        sirenSource.Stop();
         PlayPowerPelletSound();
 
-        PelletEaten(pellet);
         CancelInvoke();
         Invoke(nameof(ResetGhostMultiplier), pellet.duration); // start power state countdown
         Invoke(nameof(StopPowerPelletSound), pellet.duration); // start power state countdown
@@ -676,6 +707,11 @@ public class GameManager : MonoBehaviour
 
     private bool HalfPelletsEaten()
     {
+        return (PelletsEaten() >= pelletsForFruit); // check if required pellets for fruit spawn are eaten
+    }
+
+    public int PelletsEaten()
+    {
         int pelletsEaten = 0;
 
         foreach (Transform pellet in pellets)
@@ -686,7 +722,33 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        return (pelletsEaten >= pelletsForFruit); // check if required pellets for fruit spawn are eaten
+        UpdateSirenSound(pelletsEaten);
+
+        return pelletsEaten;
+    }
+
+    private void UpdateSirenSound(int pelletsEaten)
+    {
+        if (pelletsEaten >= 230)
+        {
+            sirenSource.pitch = 1.8f;
+        }
+        else if (pelletsEaten >= 220)
+        {
+            sirenSource.pitch = 1.6f;
+        }
+        else if (pelletsEaten >= 190)
+        {
+            sirenSource.pitch = 1.4f;
+        }
+        else if (pelletsEaten >= 170)
+        {
+            sirenSource.pitch = 1.2f;
+        }
+        else
+        {
+            sirenSource.pitch = 1f;
+        }
     }
 
     private void ResetGhostMultiplier()
@@ -746,6 +808,10 @@ public class GameManager : MonoBehaviour
     private void StopPowerPelletSound()
     {
         powerSource.Pause();
+        if (HasRemainingPellets())
+        {
+            sirenSource.Play();
+        }
     }
 
     public void PlayChompSound()

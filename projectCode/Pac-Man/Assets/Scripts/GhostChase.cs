@@ -6,10 +6,23 @@ public class GhostChase : GhostBehavior // chase after player, when chase time i
 {
     [SerializeField]
     private GameManager gm;
+    //[SerializeField]
+    //private bool getsFaster = false;
 
-    //private void Awake()
+    //private void OnEnable()
     //{
-    //    gm = FindObjectOfType<GameManager>();
+    //    if (!ghost.frightened.enabled && getsFaster && gm.PelletsEaten() >= 220)
+    //    {
+    //        ghost.movement.speedMultiplier = 1.14f;
+    //    }
+    //    else if (!ghost.frightened.enabled && getsFaster && gm.PelletsEaten() >= 230)
+    //    {
+    //        ghost.movement.speedMultiplier = 1.21f;
+    //    }
+    //    else if (!ghost.frightened.enabled)
+    //    {
+    //        ghost.movement.speedMultiplier = 1f;
+    //    }
     //}
 
     private void OnDisable() // transistion to scatter state
