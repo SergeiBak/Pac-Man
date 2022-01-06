@@ -15,7 +15,7 @@ This project is a recreation of the classic 1980 arcade game known as Pac-Man, w
 Pac-Man consists of a maze structure, in which four colored ghosts — Blinky (red), Pinky (pink), Inky (cyan), and Clyde (orange) — pursue him. The goal of the game is to eat all of the dots in the maze, which will allow the player to move onto the next level. Each of the Ghosts have a unique AI behavior, causing them to behave differently when chasing Pac-Man. To aid Pac-Man, there are power pellets in each of the 4 corners of the maze that will grant him the ability to eat ghosts for a limited period of time.     
 
 ## Test The Project!
-In order to play this version of Pac-Man, follow the [link](https://sergeibak.github.io/PersonalWebsite/pong.html) to a in-browser WebGL build (No download required!).
+In order to play this version of Pac-Man, follow the [link](https://sergeibak.github.io/PersonalWebsite/PacMan.html) to a in-browser WebGL build (No download required!).
 
 ## Code
 A brief description of all of the classes is as follows:
@@ -58,6 +58,7 @@ A brief description of all of the classes is as follows:
 - Pac-Man fruit UI display [reference](https://www.youtube.com/watch?v=NKKfW8X9uYk)
 - Pac-Man ghost AI [reference](https://www.youtube.com/watch?v=ataGotQ7ir8)
 - Pac-Man chase/scatter [reference](https://www.gamedeveloper.com/design/the-pac-man-dossier)
+- Pac-Man gameplay [reference](https://www.youtube.com/watch?v=7O1OYQRqUag)
 
 ## Donations
 This game, like many of the others I have worked on, is completely free and made for fun and learning! If you would like to support what I do, you can donate at my metamask wallet address: ```0x32d04487a141277Bb100F4b6AdAfbFED38810F40```. Thank you very much!
