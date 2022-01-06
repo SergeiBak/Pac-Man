@@ -3,6 +3,7 @@
 
 ## Table of Contents
 * [Overview](#Overview)
+* [Video Demo](#video-demo)
 * [Test The Project!](#test-the-project)
 * [Code](#Code)
 * [Technologies](#Technologies)
@@ -13,6 +14,13 @@
 This project is a recreation of the classic 1980 arcade game known as Pac-Man, with over $14 billion generated in revenue! This solo project was developed in Unity using C# as part of my minigames series where I utilize various resources to remake simple games in order to further my learning as well as to have fun!   
 
 Pac-Man consists of a maze structure, in which four colored ghosts — Blinky (red), Pinky (pink), Inky (cyan), and Clyde (orange) — pursue him. The goal of the game is to eat all of the dots in the maze, which will allow the player to move onto the next level. Each of the Ghosts have a unique AI behavior, causing them to behave differently when chasing Pac-Man. To aid Pac-Man, there are power pellets in each of the 4 corners of the maze that will grant him the ability to eat ghosts for a limited period of time.     
+
+## Video Demo
+
+
+https://user-images.githubusercontent.com/77221025/148358357-ba19a3ca-e526-4fc6-97ed-4e5bb501e58a.mp4
+
+
 
 ## Test The Project!
 In order to play this version of Pac-Man, follow the [link](https://sergeibak.github.io/PersonalWebsite/PacMan.html) to a in-browser WebGL build (No download required!).
