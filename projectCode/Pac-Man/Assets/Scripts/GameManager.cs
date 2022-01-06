@@ -548,8 +548,11 @@ public class GameManager : MonoBehaviour
         ghostText.text = ghostPoints.ToString();
 
         Vector2 ghostPos = ghost.gameObject.transform.position;
-        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, ghostPos);
-        ghostTextRectTransform.anchoredPosition = screenPoint - canvasRectT.sizeDelta / 2f;
+        Vector2 screenPoint = Camera.main.WorldToViewportPoint(ghostPos);
+        //Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, ghostPos);
+        //ghostTextRectTransform.anchoredPosition = screenPoint - canvasRectT.sizeDelta / 2f;
+        Vector2 WorldObject_ScreenPosition = new Vector2(((screenPoint.x * canvasRectT.sizeDelta.x) - (canvasRectT.sizeDelta.x * 0.5f)),((screenPoint.y * canvasRectT.sizeDelta.y) - (canvasRectT.sizeDelta.y * 0.5f)));
+        ghostTextRectTransform.anchoredPosition = WorldObject_ScreenPosition;
 
         ghostText.enabled = true;
 
@@ -561,6 +564,7 @@ public class GameManager : MonoBehaviour
     public void PacmanEaten()
     {
         sirenSource.Stop();
+        StopPowerPelletSound();
 
         pacman.gameObject.SetActive(false);
 
