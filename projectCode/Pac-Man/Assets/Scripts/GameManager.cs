@@ -177,6 +177,8 @@ public class GameManager : MonoBehaviour
 
     private float timer = 0;
 
+    private bool muteMusic;
+
     private void Start()
     {
         gameOver.enabled = false;
@@ -195,6 +197,19 @@ public class GameManager : MonoBehaviour
 
         SetupStats();
 
+        if (PlayerPrefs.GetInt("PacmanMute") == 1)
+        {
+            AudioListener.volume = 0;
+            AudioListener.pause = true;
+            muteMusic = true;
+        }
+        else
+        {
+            AudioListener.volume = 1;
+            AudioListener.pause = false;
+            muteMusic = false;
+        }
+
         DelayedStart();
 
         // NewGame();
@@ -203,6 +218,11 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            ToggleMute();
+        }
     }
 
     private void DelayedStart()
@@ -766,8 +786,30 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("PacmanHighLevel", 0);
         }
+        if (!PlayerPrefs.HasKey("PacmanMute"))
+        {
+            PlayerPrefs.SetInt("PacmanMute", 0);
+        }
 
         SetHighScoreText();
+    }
+
+    private void ToggleMute()
+    {
+        if (!muteMusic)
+        {
+            muteMusic = true;
+            AudioListener.volume = 0;
+            AudioListener.pause = true;
+            PlayerPrefs.SetInt("PacmanMute", 1);
+        }
+        else
+        {
+            muteMusic = false;
+            AudioListener.volume = 1;
+            AudioListener.pause = false;
+            PlayerPrefs.SetInt("PacmanMute", 0);
+        }
     }
 
     private void SetHighScoreText()

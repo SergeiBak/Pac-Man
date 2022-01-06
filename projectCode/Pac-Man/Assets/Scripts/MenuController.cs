@@ -110,15 +110,36 @@ public class MenuController : MonoBehaviour
     [SerializeField]
     private Text anyKeyText;
 
+    private bool muteMusic;
+
     private void Start()
     {
         SetupStats();
+
+        if (PlayerPrefs.GetInt("PacmanMute") == 1)
+        {
+            AudioListener.volume = 0;
+            AudioListener.pause = true;
+            muteMusic = true;
+        }
+        else
+        {
+            AudioListener.volume = 1;
+            AudioListener.pause = false;
+            muteMusic = false;
+        }
+
         ClearUI();
         StartCoroutine(LoadUI());
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            ToggleMute();
+        }
+
         if (Input.anyKeyDown)
         {
             StartGame();
@@ -336,6 +357,10 @@ public class MenuController : MonoBehaviour
         {
             PlayerPrefs.SetInt("PacmanHighLevel", 0);
         }
+        if (!PlayerPrefs.HasKey("PacmanMute"))
+        {
+            PlayerPrefs.SetInt("PacmanMute", 0);
+        }
 
         SetHighScoreText();
     }
@@ -343,5 +368,23 @@ public class MenuController : MonoBehaviour
     private void SetHighScoreText()
     {
         highScoreText.text = PlayerPrefs.GetInt("PacmanHighScore").ToString() + " L" + PlayerPrefs.GetInt("PacmanHighLevel").ToString();
+    }
+
+    private void ToggleMute()
+    {
+        if (!muteMusic)
+        {
+            muteMusic = true;
+            AudioListener.volume = 0;
+            AudioListener.pause = true;
+            PlayerPrefs.SetInt("PacmanMute", 1);
+        }
+        else
+        {
+            muteMusic = false;
+            AudioListener.volume = 1;
+            AudioListener.pause = false;
+            PlayerPrefs.SetInt("PacmanMute", 0);
+        }
     }
 }
