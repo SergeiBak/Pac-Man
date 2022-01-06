@@ -1,4 +1,4 @@
-# Pong
+# Pac-Man
 <img width="276.48" height="155.52" src="https://github.com/SergeiBak/PersonalWebsite/blob/master/images/Pacman.png?raw=true">
 
 ## Table of Contents
