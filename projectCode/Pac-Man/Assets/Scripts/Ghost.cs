@@ -58,7 +58,7 @@ public class Ghost : MonoBehaviour
         {
             if (frightened.enabled)
             {
-                FindObjectOfType<GameManager>().GhostEaten(this);
+                //FindObjectOfType<GameManager>().GhostEaten(this);
             }
             else
             {

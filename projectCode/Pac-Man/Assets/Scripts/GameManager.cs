@@ -254,6 +254,7 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 1;
         ready.SetActive(false);
+        sirenSource.volume = 1f;
         sirenSource.Play();
     }
 
@@ -517,7 +518,64 @@ public class GameManager : MonoBehaviour
         pacman.gameObject.SetActive(false);
     }
 
-    public void GhostEaten(Ghost ghost) // adds points for killing ghost
+    public void CallEatGhostSequence(Ghost ghost, GameObject ghostRetreat)
+    {
+        StartCoroutine(EatGhostSequence(ghost, ghostRetreat));
+    }
+
+    public IEnumerator EatGhostSequence(Ghost ghost, GameObject ghostRetreat)
+    {
+        Time.timeScale = 0;
+
+        ghost.gameObject.SetActive(false);
+        pacman.gameObject.SetActive(false);
+
+        Text ghostText = GhostEaten(ghost);
+
+        ghostRetreat.transform.position = ghost.gameObject.transform.position;
+
+        float delay = 1f;
+
+        while (true)
+        {
+            float pauseEndTime = Time.realtimeSinceStartup + delay;
+            while (Time.realtimeSinceStartup < pauseEndTime)
+            {
+                yield return 0;
+            }
+            break;
+        }
+
+        Time.timeScale = 1;
+
+        ghostText.enabled = false;
+
+        pacman.gameObject.SetActive(true);
+        ghostRetreat.SetActive(true);
+        ghostRetreat.GetComponent<GhostRetreat>().enabled = true;
+    }
+
+    public IEnumerator EatGhostSequence(float delay) 
+    {
+        ready.SetActive(true);
+        SubtractLivesIcon();
+
+        while (true)
+        {
+            float pauseEndTime = Time.realtimeSinceStartup + delay;
+            while (Time.realtimeSinceStartup < pauseEndTime)
+            {
+                yield return 0;
+            }
+            break;
+        }
+
+        Time.timeScale = 1;
+        ready.SetActive(false);
+        sirenSource.Play();
+    }
+
+    public Text GhostEaten(Ghost ghost) // adds points for killing ghost
     {
         int ghostScore = ghost.GetPoints() * (int)(Mathf.Pow(2, (ghostMultiplier - 1)));
         SetScore(score + ghostScore);
@@ -527,32 +585,42 @@ public class GameManager : MonoBehaviour
 
         if (!ghostText1.isActiveAndEnabled)
         {
-            StartCoroutine(TempGhostText(ghostScore, ghost, ghostText1, ghost1TextTransform));
+            //StartCoroutine(TempGhostText(ghostScore, ghost, ghostText1, ghost1TextTransform));
+            SetGhostText(ghostScore, ghost, ghostText1, ghost1TextTransform);
+            return ghostText1;
         }
         else if (!ghostText2.isActiveAndEnabled)
         {
-            StartCoroutine(TempGhostText(ghostScore, ghost, ghostText2, ghost2TextTransform));
+            //StartCoroutine(TempGhostText(ghostScore, ghost, ghostText2, ghost2TextTransform));
+            SetGhostText(ghostScore, ghost, ghostText2, ghost2TextTransform);
+            return ghostText2;
         }
         else if (!ghostText3.isActiveAndEnabled)
         {
-            StartCoroutine(TempGhostText(ghostScore, ghost, ghostText3, ghost3TextTransform));
+            //StartCoroutine(TempGhostText(ghostScore, ghost, ghostText3, ghost3TextTransform));
+            SetGhostText(ghostScore, ghost, ghostText3, ghost3TextTransform);
+            return ghostText3;
         }
         else
         {
-            StartCoroutine(TempGhostText(ghostScore, ghost, ghostText4, ghost4TextTransform));
+            //StartCoroutine(TempGhostText(ghostScore, ghost, ghostText4, ghost4TextTransform));
+            SetGhostText(ghostScore, ghost, ghostText4, ghost4TextTransform);
+            return ghostText4;
         }
     }
 
     private IEnumerator TempGhostText(int ghostPoints, Ghost ghost, Text ghostText, RectTransform ghostTextRectTransform)
     {
-        ghostText.text = ghostPoints.ToString();
+        //ghostText.text = ghostPoints.ToString();
 
-        Vector2 ghostPos = ghost.gameObject.transform.position;
-        Vector2 screenPoint = Camera.main.WorldToViewportPoint(ghostPos);
-        //Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, ghostPos);
-        //ghostTextRectTransform.anchoredPosition = screenPoint - canvasRectT.sizeDelta / 2f;
-        Vector2 WorldObject_ScreenPosition = new Vector2(((screenPoint.x * canvasRectT.sizeDelta.x) - (canvasRectT.sizeDelta.x * 0.5f)),((screenPoint.y * canvasRectT.sizeDelta.y) - (canvasRectT.sizeDelta.y * 0.5f)));
-        ghostTextRectTransform.anchoredPosition = WorldObject_ScreenPosition;
+        //Vector2 ghostPos = ghost.gameObject.transform.position;
+        //Vector2 screenPoint = Camera.main.WorldToViewportPoint(ghostPos);
+        ////Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, ghostPos);
+        ////ghostTextRectTransform.anchoredPosition = screenPoint - canvasRectT.sizeDelta / 2f;
+        //Vector2 WorldObject_ScreenPosition = new Vector2(((screenPoint.x * canvasRectT.sizeDelta.x) - (canvasRectT.sizeDelta.x * 0.5f)),((screenPoint.y * canvasRectT.sizeDelta.y) - (canvasRectT.sizeDelta.y * 0.5f)));
+        //ghostTextRectTransform.anchoredPosition = WorldObject_ScreenPosition; // https://gist.github.com/unitycoder/54f4be0324cccb649eff
+
+        SetGhostText(ghostPoints, ghost, ghostText, ghostTextRectTransform);
 
         ghostText.enabled = true;
 
@@ -561,9 +629,24 @@ public class GameManager : MonoBehaviour
         ghostText.enabled = false;
     }
 
+    private void SetGhostText(int ghostPoints, Ghost ghost, Text ghostText, RectTransform ghostTextRectTransform)
+    {
+        ghostText.text = ghostPoints.ToString();
+
+        Vector2 ghostPos = ghost.gameObject.transform.position;
+        Vector2 screenPoint = Camera.main.WorldToViewportPoint(ghostPos);
+        //Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, ghostPos);
+        //ghostTextRectTransform.anchoredPosition = screenPoint - canvasRectT.sizeDelta / 2f;
+        Vector2 WorldObject_ScreenPosition = new Vector2(((screenPoint.x * canvasRectT.sizeDelta.x) - (canvasRectT.sizeDelta.x * 0.5f)), ((screenPoint.y * canvasRectT.sizeDelta.y) - (canvasRectT.sizeDelta.y * 0.5f)));
+        ghostTextRectTransform.anchoredPosition = WorldObject_ScreenPosition; // https://gist.github.com/unitycoder/54f4be0324cccb649eff
+
+        ghostText.enabled = true;
+    }
+
     public void PacmanEaten()
     {
         sirenSource.Stop();
+        sirenSource.volume = 0f;
         StopPowerPelletSound();
 
         pacman.gameObject.SetActive(false);

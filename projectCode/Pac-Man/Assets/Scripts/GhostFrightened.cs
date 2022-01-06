@@ -65,10 +65,12 @@ public class GhostFrightened : GhostBehavior
         //blue.enabled = false;
         //white.enabled = false;
 
-        ghostRetreat.transform.position = transform.position;
-        ghostRetreat.SetActive(true);
-        ghostRetreat.GetComponent<GhostRetreat>().enabled = true;
-        this.gameObject.SetActive(false);
+        //this.gameObject.SetActive(false);
+        //ghostRetreat.transform.position = transform.position;
+        //ghostRetreat.SetActive(true);
+        //ghostRetreat.GetComponent<GhostRetreat>().enabled = true;
+
+        FindObjectOfType<GameManager>().CallEatGhostSequence(this.ghost, ghostRetreat);
     }
 
     private void OnEnable()
